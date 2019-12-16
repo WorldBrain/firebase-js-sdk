@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
+import { SubscriptionOptions } from './subscription-options';
+
 export interface TokenDetails {
-  fcmToken: string;
-  swScope: string;
-  vapidKey: Uint8Array;
-  fcmSenderId: string;
-  endpoint: string;
-  auth: ArrayBufferLike;
-  p256dh: ArrayBufferLike;
+  token: string;
   createTime: number;
+  /** Does not exist in Safari since it's not using Push API. */
+  subscriptionOptions?: SubscriptionOptions;
 }

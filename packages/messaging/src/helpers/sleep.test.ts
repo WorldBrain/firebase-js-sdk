@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
+import { expect } from 'chai';
+import { SinonFakeTimers, useFakeTimers } from 'sinon';
+import '../testing/setup';
+import { sleep } from './sleep';
 
-const FILES = [`src/**/*.test.ts`];
+describe('sleep', () => {
+  let clock: SinonFakeTimers;
 
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
+  beforeEach(() => {
+    clock = useFakeTimers({ shouldAdvanceTime: true });
+  });
 
-  config.set(karmaConfig);
-};
+  it('returns a promise that resolves after a given amount of time', async () => {
+    const t0 = clock.now;
+    await sleep(100);
+    const t1 = clock.now;
 
-module.exports.files = FILES;
+    expect(t1 - t0).to.equal(100);
+  });
+});

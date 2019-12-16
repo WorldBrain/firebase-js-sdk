@@ -15,21 +15,11 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
-
-const FILES = [`src/**/*.test.ts`];
-
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
-
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+export function arrayToBase64(array: Uint8Array | ArrayBuffer): string {
+  const uint8Array = new Uint8Array(array);
+  const base64String = btoa(String.fromCharCode(...uint8Array));
+  return base64String
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,11 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
-
-const FILES = [`src/**/*.test.ts`];
-
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
-
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+export interface AppConfig {
+  readonly appName: string;
+  readonly projectId: string;
+  readonly apiKey: string;
+  readonly appId: string;
+  /** Only used for old DB migration. */
+  readonly senderId: string;
+}

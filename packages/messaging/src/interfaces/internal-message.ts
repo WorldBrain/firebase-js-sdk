@@ -15,21 +15,16 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
+import { MessagePayload } from './message-payload';
 
-const FILES = [`src/**/*.test.ts`];
+export enum MessageType {
+  PUSH_RECEIVED = 'push-received',
+  NOTIFICATION_CLICKED = 'notification-clicked'
+}
 
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
+export interface InternalMessage {
+  firebaseMessaging: {
+    type: MessageType;
+    payload: MessagePayload;
   };
-
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+}

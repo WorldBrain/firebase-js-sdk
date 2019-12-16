@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
+import { use } from 'chai';
+import * as chaiAsPromised from 'chai-as-promised';
+import { restore } from 'sinon';
+import * as sinonChai from 'sinon-chai';
+import { dbDelete } from '../helpers/idb-manager';
+import { deleteDb } from 'idb';
 
-const FILES = [`src/**/*.test.ts`];
+use(chaiAsPromised);
+use(sinonChai);
 
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
-
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+afterEach(async () => {
+  restore();
+  await dbDelete();
+  await deleteDb('fcm_token_details_db');
+});

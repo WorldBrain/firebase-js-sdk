@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,15 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
+import { FirebaseInstallations } from '@firebase/installations-types';
+import { FirebaseAnalyticsInternalName } from '@firebase/analytics-interop-types';
+import { Provider } from '@firebase/component';
+import { AppConfig } from './app-config';
+import { FirebaseApp } from '@firebase/app-types';
 
-const FILES = [`src/**/*.test.ts`];
-
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
-
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+export interface FirebaseInternalDependencies {
+  app: FirebaseApp;
+  appConfig: AppConfig;
+  installations: FirebaseInstallations;
+  analyticsProvider: Provider<FirebaseAnalyticsInternalName>;
+}

@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-/* eslint-disable camelcase */
-
 export interface NotificationDetails extends NotificationOptions {
   title: string;
-  click_action?: string;
+  click_action?: string; // eslint-disable-line camelcase
 }
 
 export interface FcmOptions {
@@ -29,5 +27,5 @@ export interface FcmOptions {
 export interface MessagePayload {
   fcmOptions?: FcmOptions;
   notification?: NotificationDetails;
-  data?: { [key: string]: unknown };
+  data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,16 @@
  * limitations under the License.
  */
 
-const karma = require('karma');
-const path = require('path');
-const karmaBase = require('../../config/karma.base');
+import { SinonStub, SinonSpy } from 'sinon';
 
-const FILES = [`src/**/*.test.ts`];
+// Helper types for Sinon stubs and spies.
 
-module.exports = function(config) {
-  const karmaConfig = {
-    ...karmaBase,
-    files: FILES,
-    preprocessors: { 'src/**/*.test.ts': ['webpack', 'sourcemap'] },
-    frameworks: ['mocha']
-  };
+export type Stub<T extends (...args: any) => any> = SinonStub<
+  Parameters<T>,
+  ReturnType<T>
+>;
 
-  config.set(karmaConfig);
-};
-
-module.exports.files = FILES;
+export type Spy<T extends (...args: any) => any> = SinonSpy<
+  Parameters<T>,
+  ReturnType<T>
+>;

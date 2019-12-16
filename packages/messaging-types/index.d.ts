@@ -25,7 +25,10 @@ import {
 } from '@firebase/util';
 
 export class FirebaseMessaging {
-  private constructor();
+  private constructor(app: FirebaseApp);
+  readonly app: FirebaseApp;
+  // TODO: remove the token parameter and just delete the token that matches
+  // this app if it exists.
   deleteToken(token: string): Promise<boolean>;
   getToken(): Promise<string>;
   onMessage(

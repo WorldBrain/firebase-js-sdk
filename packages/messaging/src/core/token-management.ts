@@ -17,8 +17,7 @@
 
 import { dbGet, dbSet, dbRemove } from '../helpers/idb-manager';
 import { FirebaseInternalDependencies } from '../interfaces/internal-dependencies';
-import { SubscriptionOptions } from '../interfaces/subscription-options';
-import { TokenDetails } from '../interfaces/token-details';
+import { TokenDetails, SubscriptionOptions } from '../interfaces/token-details';
 import { requestUpdateToken, requestGetToken, requestDeleteToken } from './api';
 import { arrayToBase64 } from '../helpers/array-to-base64';
 import { ERROR_FACTORY, ErrorCode } from '../util/errors';

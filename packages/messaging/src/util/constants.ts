@@ -26,8 +26,8 @@ export const ENDPOINT = 'https://fcmregistrations.googleapis.com/v1';
 /** Key of FCM Payload in Notification's data field. */
 export const FCM_MSG = 'FCM_MSG';
 
-export const FN_CAMPAIGN_ID = 'google.c.a.c_id';
-export const FN_CAMPAIGN_NAME = 'google.c.a.c_l';
-export const FN_CAMPAIGN_TIME = 'google.c.a.ts';
+export const CONSOLE_CAMPAIGN_ID = 'google.c.a.c_id';
+export const CONSOLE_CAMPAIGN_NAME = 'google.c.a.c_l';
+export const CONSOLE_CAMPAIGN_TIME = 'google.c.a.ts';
 /** Set to '1' if Analytics is enabled for the campaign */
-export const FN_CAMPAIGN_ANALYTICS_ENABLED = 'google.c.a.e';
+export const CONSOLE_CAMPAIGN_ANALYTICS_ENABLED = 'google.c.a.e';

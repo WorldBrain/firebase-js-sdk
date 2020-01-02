@@ -28,15 +28,15 @@ const OBJECT_STORE_NAME = 'firebase-messaging-store';
 let dbPromise: Promise<DB> | null = null;
 function getDbPromise(): Promise<DB> {
   if (!dbPromise) {
-    dbPromise = openDb(DATABASE_NAME, DATABASE_VERSION, upgradeDB => {
+    dbPromise = openDb(DATABASE_NAME, DATABASE_VERSION, upgradeDb => {
       // We don't use 'break' in this switch statement, the fall-through
       // behavior is what we want, because if there are multiple versions between
       // the old version and the current version, we want ALL the migrations
       // that correspond to those versions to run, not only the last one.
       // eslint-disable-next-line default-case
-      switch (upgradeDB.oldVersion) {
+      switch (upgradeDb.oldVersion) {
         case 0:
-          upgradeDB.createObjectStore(OBJECT_STORE_NAME);
+          upgradeDb.createObjectStore(OBJECT_STORE_NAME);
       }
     });
   }

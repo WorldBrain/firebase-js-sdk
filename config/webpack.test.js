@@ -50,7 +50,7 @@ module.exports = {
           options: { esModules: true }
         },
         enforce: 'post',
-        exclude: [/\.test\.ts$/, /test(ing)?\//]
+        exclude: [/\.test\.ts$/, /\btest(ing)?\//]
       },
       {
         test: /\.js$/,

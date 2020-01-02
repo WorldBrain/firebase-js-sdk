@@ -34,10 +34,10 @@ import {
 import {
   FCM_MSG,
   DEFAULT_VAPID_KEY,
-  FN_CAMPAIGN_ID,
-  FN_CAMPAIGN_NAME,
-  FN_CAMPAIGN_TIME,
-  FN_CAMPAIGN_ANALYTICS_ENABLED
+  CONSOLE_CAMPAIGN_ID,
+  CONSOLE_CAMPAIGN_NAME,
+  CONSOLE_CAMPAIGN_TIME,
+  CONSOLE_CAMPAIGN_ANALYTICS_ENABLED
 } from '../util/constants';
 import { dbSet } from '../helpers/idb-manager';
 import { getFakeTokenDetails } from '../testing/fakes/token-details';
@@ -440,10 +440,10 @@ describe('SwController', () => {
       delete NOTIFICATION_CLICK_PAYLOAD.notification!.data![FCM_MSG].fcmOptions;
       // Add FN data.
       NOTIFICATION_CLICK_PAYLOAD.notification!.data![FCM_MSG].data = {
-        [FN_CAMPAIGN_ID]: '123456',
-        [FN_CAMPAIGN_NAME]: 'Campaign Name',
-        [FN_CAMPAIGN_TIME]: '1234567890',
-        [FN_CAMPAIGN_ANALYTICS_ENABLED]: '1'
+        [CONSOLE_CAMPAIGN_ID]: '123456',
+        [CONSOLE_CAMPAIGN_NAME]: 'Campaign Name',
+        [CONSOLE_CAMPAIGN_TIME]: '1234567890',
+        [CONSOLE_CAMPAIGN_ANALYTICS_ENABLED]: '1'
       };
 
       const matchAllSpy = spy(self.clients, 'matchAll');

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2019 Google Inc.
+ * Copyright 2017 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,17 @@ import { ERROR_FACTORY, ErrorCode } from '../util/errors';
 import { NextFn, Observer, Unsubscribe } from '@firebase/util';
 import { InternalMessage, MessageType } from '../interfaces/internal-message';
 import {
-  FN_CAMPAIGN_ID,
-  FN_CAMPAIGN_ANALYTICS_ENABLED,
-  FN_CAMPAIGN_NAME,
-  FN_CAMPAIGN_TIME,
+  CONSOLE_CAMPAIGN_ID,
+  CONSOLE_CAMPAIGN_ANALYTICS_ENABLED,
+  CONSOLE_CAMPAIGN_NAME,
+  CONSOLE_CAMPAIGN_TIME,
   DEFAULT_SW_PATH,
   DEFAULT_SW_SCOPE,
   DEFAULT_VAPID_KEY
 } from '../util/constants';
 import { FirebaseApp } from '@firebase/app-types';
+import { ConsoleMessageData } from '../interfaces/message-payload';
+import { isConsoleMessage } from '../helpers/is-console-message';
 
 export class WindowController implements FirebaseMessaging {
   private vapidKey: string | null = null;
@@ -188,11 +190,9 @@ export class WindowController implements FirebaseMessaging {
 
     const { data } = payload;
     if (
-      data &&
-      FN_CAMPAIGN_ID in data &&
-      data[FN_CAMPAIGN_ANALYTICS_ENABLED] === '1'
+      isConsoleMessage(data) &&
+      data[CONSOLE_CAMPAIGN_ANALYTICS_ENABLED] === '1'
     ) {
-      // This message has a campaign id, meaning it was sent using the FN Console.
       // Analytics is enabled on this message, so we should log it.
       await this.logEvent(type, data);
     }
@@ -206,9 +206,9 @@ export class WindowController implements FirebaseMessaging {
     const analytics = await this.firebaseDependencies.analyticsProvider.get();
     analytics.logEvent(eventType, {
       /* eslint-disable camelcase */
-      message_id: data[FN_CAMPAIGN_ID],
-      message_name: data[FN_CAMPAIGN_NAME],
-      message_time: data[FN_CAMPAIGN_TIME],
+      message_id: data[CONSOLE_CAMPAIGN_ID],
+      message_name: data[CONSOLE_CAMPAIGN_NAME],
+      message_time: data[CONSOLE_CAMPAIGN_TIME],
       message_device_time: Math.floor(Date.now() / 1000)
       /* eslint-enable camelcase */
     });
@@ -224,12 +224,4 @@ function getEventType(messageType: MessageType): string {
     default:
       throw new Error();
   }
-}
-
-/** Additional data of a message sent from the FN Console. */
-interface ConsoleMessageData {
-  [FN_CAMPAIGN_ID]: string;
-  [FN_CAMPAIGN_TIME]: string;
-  [FN_CAMPAIGN_NAME]?: string;
-  [FN_CAMPAIGN_ANALYTICS_ENABLED]?: '1';
 }

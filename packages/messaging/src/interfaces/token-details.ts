@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-import { SubscriptionOptions } from './subscription-options';
-
 export interface TokenDetails {
   token: string;
   createTime: number;
   /** Does not exist in Safari since it's not using Push API. */
   subscriptionOptions?: SubscriptionOptions;
+}
+
+/**
+ * Additional options and values required by a Push API subscription.
+ */
+export interface SubscriptionOptions {
+  vapidKey: string;
+  swScope: string;
+  endpoint: string;
+  auth: string;
+  p256dh: string;
 }

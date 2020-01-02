@@ -27,10 +27,10 @@ import {
   DEFAULT_VAPID_KEY,
   DEFAULT_SW_SCOPE,
   DEFAULT_SW_PATH,
-  FN_CAMPAIGN_ANALYTICS_ENABLED,
-  FN_CAMPAIGN_ID,
-  FN_CAMPAIGN_NAME,
-  FN_CAMPAIGN_TIME
+  CONSOLE_CAMPAIGN_ANALYTICS_ENABLED,
+  CONSOLE_CAMPAIGN_ID,
+  CONSOLE_CAMPAIGN_NAME,
+  CONSOLE_CAMPAIGN_TIME
 } from '../util/constants';
 import { Stub, Spy } from '../testing/sinon-types';
 import '../testing/setup';
@@ -413,10 +413,10 @@ describe('WindowController', () => {
 
     it('calls analytics.logEvent if the message has analytics enabled for PUSH_RECEIVED', async () => {
       const data = {
-        [FN_CAMPAIGN_ID]: '123456',
-        [FN_CAMPAIGN_NAME]: 'Campaign Name',
-        [FN_CAMPAIGN_TIME]: '1234567890',
-        [FN_CAMPAIGN_ANALYTICS_ENABLED]: '1'
+        [CONSOLE_CAMPAIGN_ID]: '123456',
+        [CONSOLE_CAMPAIGN_NAME]: 'Campaign Name',
+        [CONSOLE_CAMPAIGN_TIME]: '1234567890',
+        [CONSOLE_CAMPAIGN_ANALYTICS_ENABLED]: '1'
       };
       const message: InternalMessage = {
         firebaseMessaging: {
@@ -439,9 +439,9 @@ describe('WindowController', () => {
         'notification_foreground',
         {
           /* eslint-disable camelcase */
-          message_id: data[FN_CAMPAIGN_ID],
-          message_name: data[FN_CAMPAIGN_NAME],
-          message_time: data[FN_CAMPAIGN_TIME],
+          message_id: data[CONSOLE_CAMPAIGN_ID],
+          message_name: data[CONSOLE_CAMPAIGN_NAME],
+          message_time: data[CONSOLE_CAMPAIGN_TIME],
           message_device_time: clock.now
           /* eslint-enable camelcase */
         }
@@ -450,10 +450,10 @@ describe('WindowController', () => {
 
     it('calls analytics.logEvent if the message has analytics enabled for NOTIFICATION_CLICKED', async () => {
       const data = {
-        [FN_CAMPAIGN_ID]: '123456',
-        [FN_CAMPAIGN_NAME]: 'Campaign Name',
-        [FN_CAMPAIGN_TIME]: '1234567890',
-        [FN_CAMPAIGN_ANALYTICS_ENABLED]: '1'
+        [CONSOLE_CAMPAIGN_ID]: '123456',
+        [CONSOLE_CAMPAIGN_NAME]: 'Campaign Name',
+        [CONSOLE_CAMPAIGN_TIME]: '1234567890',
+        [CONSOLE_CAMPAIGN_ANALYTICS_ENABLED]: '1'
       };
       const message: InternalMessage = {
         firebaseMessaging: {
@@ -472,9 +472,9 @@ describe('WindowController', () => {
       expect(onMessageSpy).not.to.have.been.called;
       expect(logEventSpy).to.have.been.calledOnceWith('notification_open', {
         /* eslint-disable camelcase */
-        message_id: data[FN_CAMPAIGN_ID],
-        message_name: data[FN_CAMPAIGN_NAME],
-        message_time: data[FN_CAMPAIGN_TIME],
+        message_id: data[CONSOLE_CAMPAIGN_ID],
+        message_name: data[CONSOLE_CAMPAIGN_NAME],
+        message_time: data[CONSOLE_CAMPAIGN_TIME],
         message_device_time: clock.now
         /* eslint-enable camelcase */
       });

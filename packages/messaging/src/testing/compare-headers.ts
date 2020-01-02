@@ -29,10 +29,12 @@ export function compareHeaders(
   expectedHeaders: HeadersWithEntries,
   actualHeaders: HeadersWithEntries
 ): void {
-  expect(expectedHeaders.entries).not.to.be.undefined;
-  expect(actualHeaders.entries).not.to.be.undefined;
-
-  const expected = new Map(Array.from(expectedHeaders.entries!()));
-  const actual = new Map(Array.from(actualHeaders.entries!()));
+  const expected = makeMap(expectedHeaders);
+  const actual = makeMap(actualHeaders);
   expect(actual).to.deep.equal(expected);
+}
+
+function makeMap(headers: HeadersWithEntries): Map<string, string> {
+  expect(headers.entries).not.to.be.undefined;
+  return new Map(headers.entries!());
 }

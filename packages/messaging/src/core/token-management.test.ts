@@ -28,9 +28,8 @@ import { dbGet, dbSet } from '../helpers/idb-manager';
 import * as apiModule from './api';
 import { Stub } from '../testing/sinon-types';
 import { getFakeTokenDetails } from '../testing/fakes/token-details';
-import { TokenDetails } from '../interfaces/token-details';
+import { TokenDetails, SubscriptionOptions } from '../interfaces/token-details';
 import { arrayToBase64 } from '../helpers/array-to-base64';
-import { SubscriptionOptions } from '../interfaces/subscription-options';
 
 describe('Token Management', () => {
   let tokenDetails: TokenDetails;

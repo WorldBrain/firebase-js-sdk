@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
+import {
+  CONSOLE_CAMPAIGN_ID,
+  CONSOLE_CAMPAIGN_TIME,
+  CONSOLE_CAMPAIGN_NAME,
+  CONSOLE_CAMPAIGN_ANALYTICS_ENABLED
+} from '../util/constants';
+
 export interface NotificationDetails extends NotificationOptions {
   title: string;
   click_action?: string; // eslint-disable-line camelcase
@@ -27,5 +34,13 @@ export interface FcmOptions {
 export interface MessagePayload {
   fcmOptions?: FcmOptions;
   notification?: NotificationDetails;
-  data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  data?: unknown;
+}
+
+/** Additional data of a message sent from the FN Console. */
+export interface ConsoleMessageData {
+  [CONSOLE_CAMPAIGN_ID]: string;
+  [CONSOLE_CAMPAIGN_TIME]: string;
+  [CONSOLE_CAMPAIGN_NAME]?: string;
+  [CONSOLE_CAMPAIGN_ANALYTICS_ENABLED]?: '1';
 }

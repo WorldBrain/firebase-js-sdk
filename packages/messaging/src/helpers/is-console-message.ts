@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-/**
- * Additional options and values required by a Push API subscription.
- */
-export interface SubscriptionOptions {
-  vapidKey: string;
-  swScope: string;
-  endpoint: string;
-  auth: string;
-  p256dh: string;
+import { ConsoleMessageData } from '../interfaces/message-payload';
+import { CONSOLE_CAMPAIGN_ID } from '../util/constants';
+
+export function isConsoleMessage(data: unknown): data is ConsoleMessageData {
+  // This message has a campaign ID, meaning it was sent using the
+  // Firebase Console.
+  return typeof data === 'object' && !!data && CONSOLE_CAMPAIGN_ID in data;
 }

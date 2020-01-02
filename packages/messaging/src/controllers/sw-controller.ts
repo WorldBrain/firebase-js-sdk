@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2019 Google Inc.
+ * Copyright 2017 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,13 @@ import {
   MessagePayload,
   NotificationDetails
 } from '../interfaces/message-payload';
-import { FCM_MSG, FN_CAMPAIGN_ID, DEFAULT_VAPID_KEY } from '../util/constants';
+import { FCM_MSG, DEFAULT_VAPID_KEY } from '../util/constants';
 import { MessageType, InternalMessage } from '../interfaces/internal-message';
 import { dbGet } from '../helpers/idb-manager';
 import { Unsubscribe } from '@firebase/util';
 import { sleep } from '../helpers/sleep';
 import { FirebaseApp } from '@firebase/app-types';
+import { isConsoleMessage } from '../helpers/is-console-message';
 
 // Let TS know that this is a service worker
 declare const self: ServiceWorkerGlobalScope;
@@ -355,7 +356,7 @@ function getLink(payload: MessagePayload): string | null {
     return link;
   }
 
-  if (payload.data?.[FN_CAMPAIGN_ID]) {
+  if (isConsoleMessage(payload.data)) {
     // Notification created in the Firebase Console. Redirect to origin.
     return self.location.origin;
   } else {

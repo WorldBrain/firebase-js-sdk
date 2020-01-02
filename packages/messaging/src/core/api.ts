@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc.
+ * Copyright 2019 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,8 @@
 
 import { ErrorCode, ERROR_FACTORY } from '../util/errors';
 import { DEFAULT_VAPID_KEY, ENDPOINT } from '../util/constants';
-import { TokenDetails } from '../interfaces/token-details';
+import { TokenDetails, SubscriptionOptions } from '../interfaces/token-details';
 import { FirebaseInternalDependencies } from '../interfaces/internal-dependencies';
-import { SubscriptionOptions } from '../interfaces/subscription-options';
 import { AppConfig } from '../interfaces/app-config';
 
 export interface ApiResponse {

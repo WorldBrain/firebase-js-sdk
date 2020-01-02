@@ -24,9 +24,7 @@ import {
   CompleteFn
 } from '@firebase/util';
 
-export class FirebaseMessaging {
-  private constructor(app: FirebaseApp);
-  readonly app: FirebaseApp;
+export interface FirebaseMessaging {
   // TODO: remove the token parameter and just delete the token that matches
   // this app if it exists.
   deleteToken(token: string): Promise<boolean>;

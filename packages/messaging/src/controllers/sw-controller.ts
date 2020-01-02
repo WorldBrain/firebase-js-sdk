@@ -30,19 +30,16 @@ import { Unsubscribe } from '@firebase/util';
 import { sleep } from '../helpers/sleep';
 import { FirebaseApp } from '@firebase/app-types';
 import { isConsoleMessage } from '../helpers/is-console-message';
+import { FirebaseService } from '@firebase/app-types/private';
 
 // Let TS know that this is a service worker
 declare const self: ServiceWorkerGlobalScope;
 
 export type BgMessageHandler = (payload: MessagePayload) => unknown;
 
-export class SwController implements FirebaseMessaging {
+export class SwController implements FirebaseMessaging, FirebaseService {
   private vapidKey: string | null = null;
   private bgMessageHandler: BgMessageHandler | null = null;
-
-  get app(): FirebaseApp {
-    return this.firebaseDependencies.app;
-  }
 
   constructor(
     private readonly firebaseDependencies: FirebaseInternalDependencies
@@ -56,6 +53,10 @@ export class SwController implements FirebaseMessaging {
     self.addEventListener('notificationclick', e => {
       e.waitUntil(this.onNotificationClick(e));
     });
+  }
+
+  get app(): FirebaseApp {
+    return this.firebaseDependencies.app;
   }
 
   /**

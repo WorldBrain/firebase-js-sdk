@@ -33,8 +33,9 @@ import {
 import { FirebaseApp } from '@firebase/app-types';
 import { ConsoleMessageData } from '../interfaces/message-payload';
 import { isConsoleMessage } from '../helpers/is-console-message';
+import { FirebaseService } from '@firebase/app-types/private';
 
-export class WindowController implements FirebaseMessaging {
+export class WindowController implements FirebaseMessaging, FirebaseService {
   private vapidKey: string | null = null;
   private swRegistration?: ServiceWorkerRegistration;
   private onMessageCallback: NextFn<object> | null = null;

@@ -105,6 +105,8 @@ function isSupported(): boolean {
  */
 function isWindowControllerSupported(): boolean {
   return (
+    'indexedDB' in window &&
+    indexedDB !== null &&
     navigator.cookieEnabled &&
     'serviceWorker' in navigator &&
     'PushManager' in window &&
@@ -120,6 +122,8 @@ function isWindowControllerSupported(): boolean {
  */
 function isSWControllerSupported(): boolean {
   return (
+    'indexedDB' in self &&
+    indexedDB !== null &&
     'PushManager' in self &&
     'Notification' in self &&
     ServiceWorkerRegistration.prototype.hasOwnProperty('showNotification') &&

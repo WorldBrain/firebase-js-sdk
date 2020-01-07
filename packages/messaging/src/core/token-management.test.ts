@@ -204,6 +204,43 @@ describe('Token Management', () => {
       expect(tokenFromDb).to.deep.equal(expectedTokenDetails);
     });
 
+    it('deletes the token if the update fails', async () => {
+      stub(Notification, 'permission').value('granted');
+
+      // Change create time to be older than a week.
+      tokenDetails.createTime = Date.now() - 8 * 24 * 60 * 60 * 1000; // 8 days
+
+      await dbSet(firebaseDependencies, tokenDetails);
+
+      requestUpdateTokenStub.rejects(new Error('Update failed.'));
+
+      await expect(
+        getToken(
+          firebaseDependencies,
+          swRegistration,
+          tokenDetails.subscriptionOptions!.vapidKey
+        )
+      ).to.be.rejectedWith('Update failed.');
+
+      const expectedTokenDetails: TokenDetails = {
+        ...tokenDetails,
+        createTime: Date.now()
+      };
+
+      expect(requestGetTokenStub).not.to.have.been.called;
+      expect(requestUpdateTokenStub).to.have.been.calledOnceWith(
+        firebaseDependencies,
+        expectedTokenDetails
+      );
+      expect(requestDeleteTokenStub).to.have.been.calledOnceWith(
+        firebaseDependencies,
+        tokenDetails.token
+      );
+
+      const tokenFromDb = await dbGet(firebaseDependencies);
+      expect(tokenFromDb).to.be.undefined;
+    });
+
     it('returns the token if it is valid', async () => {
       stub(Notification, 'permission').value('granted');
 

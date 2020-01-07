@@ -178,12 +178,20 @@ describe('SwController', () => {
   });
 
   describe('onPush', () => {
-    it('does not throw if push is not from FCM', async () => {
+    it('does nothing if push is not from FCM', async () => {
+      const showNotificationSpy = spy(self.registration, 'showNotification');
+      const matchAllSpy = spy(self.clients, 'matchAll');
+
+      await callEventListener(makeEvent('push', {}));
+
       await callEventListener(
         makeEvent('push', {
           data: {}
         })
       );
+
+      expect(showNotificationSpy).not.to.have.been.called;
+      expect(matchAllSpy).not.to.have.been.called;
     });
 
     it('sends a message to window clients if a window client is visible', async () => {
@@ -266,6 +274,32 @@ describe('SwController', () => {
       );
 
       expect(bgMessageHandlerSpy).to.have.been.calledWith();
+    });
+
+    it('warns if there are more action buttons than the browser limit', async () => {
+      stub(Notification, 'maxActions').value(1);
+
+      const warnStub = stub(console, 'warn');
+
+      await callEventListener(
+        makeEvent('push', {
+          data: {
+            json: () => ({
+              notification: {
+                ...NOTIFICATION_MESSAGE_PAYLOAD,
+                actions: [
+                  { action: 'like', title: 'Like' },
+                  { action: 'favorite', title: 'Favorite' }
+                ]
+              }
+            })
+          }
+        })
+      );
+
+      expect(warnStub).to.have.been.calledOnceWith(
+        'This browser only supports 1 actions. The remaining actions will not be displayed.'
+      );
     });
   });
 

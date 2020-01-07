@@ -342,8 +342,7 @@ function showNotification(details: NotificationDetails): Promise<void> {
   const { maxActions } = Notification;
   if (actions && maxActions && actions.length > maxActions) {
     console.warn(
-      `This browser only supports ${maxActions} actions.` +
-        `The remaining actions will not be displayed.`
+      `This browser only supports ${maxActions} actions. The remaining actions will not be displayed.`
     );
   }
 

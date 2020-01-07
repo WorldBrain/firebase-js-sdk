@@ -82,6 +82,21 @@ describe('migrateOldDb', () => {
       const tokenDetails = await migrateOldDatabase('321321321');
       expect(tokenDetails).to.be.null;
     });
+
+    it('does not migrate an entry with missing optional values', async () => {
+      const v2TokenDetails: V2TokenDetails = {
+        fcmToken: 'token-value',
+        swScope: '/scope-value',
+        vapidKey: base64ToArrayBuffer('dmFwaWQta2V5LXZhbHVl'),
+        fcmSenderId: '1234567890',
+        fcmPushSet: '7654321',
+        subscription: new FakePushSubscription()
+      };
+      await put(2, v2TokenDetails);
+
+      const tokenDetails = await migrateOldDatabase('1234567890');
+      expect(tokenDetails).to.be.null;
+    });
   });
 
   describe('version 3', () => {

@@ -108,16 +108,11 @@ export class FakeServiceWorkerRegistration
   sync = (null as unknown) as SyncManager;
   updateViaCache = (null as unknown) as ServiceWorkerUpdateViaCache;
 
-  private readonly notifications: Notification[] = [];
-
   async getNotifications() {
-    return this.notifications;
+    return [];
   }
 
-  async showNotification(title: string, options: NotificationOptions) {
-    const notification = new Notification(title, options);
-    this.notifications.push(notification);
-  }
+  async showNotification() {}
 
   async update() {}
 
